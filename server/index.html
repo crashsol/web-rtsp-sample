@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <video
+      style="width: 918px; height: 600px; margin-left: 10px"
+      id="player"
+      class="centeredVideo"
+      controls
+      autoplay
+      width="1024"
+      height="576"
+    >
+      Your browser is too old which doesn't support HTML5 video.
+    </video>
+    <script src="./flv.js"></script>
+    <script>
+      var id = "1"; //websokect的通信id（自己定义一个，一个地址对应一个id）
+      var rtsp =
+        "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4"; //播放rtsp的地址
+      var player = null; //播放的对象
+
+      var video = null;
+      var videoUrl = null;
+      if (flvjs.isSupported()) {
+        video = document.getElementById("player");
+        videoUrl = "ws://localhost:8100";
+      }
+      if (video) {
+        this.player = flvjs.createPlayer({
+          type: "flv",
+          isLive: true,
+          url: videoUrl + `/rtsp?url=${window.btoa(rtsp)}`, //这里的videoUrl我在json配置文件中进行配置连接的地址
+        });
+        this.player.attachMediaElement(video);
+        try {
+          this.player.load();
+          this.player.play(); // 他还有很多的函数可以看一下flv.js的官方文档
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    </script>
+  </body>
+</html>
