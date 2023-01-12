@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JSMpeg Stream Client</title>
+    <style type="text/css">
+        html,
+        body {
+
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <canvas id="video-canvas" style="height: 95vh;width: 95vw;" contenteditable=""></canvas>
+    <script type="text/javascript" src="js/jsmpeg.min.js"></script>
+    <script type="text/javascript">
+
+        var id="1";
+        var rtsp="rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4"
+        fetch(`http://${document.location.hostname}:18100/open?id=${id}&rtsp=${rtsp}`)
+            .then(result => {
+                return result.json()
+            }).then(data => {
+
+                console.log(data)
+                var canvas=document.getElementById('video-canvas');
+                var url='ws://'+document.location.hostname+`:9981/`;
+                var player=new JSMpeg.Player(url, { canvas: canvas });
+
+            })
+
+    </script>
+</body>
+
+</html>
